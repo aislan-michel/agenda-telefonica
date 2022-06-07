@@ -2,7 +2,7 @@
 
 Console.WriteLine("\t\t\t\t=====================================================\n");
 Console.WriteLine("\t\t\t\t==================AGENDA TELEFÔNICA==================\n");
-Console.WriteLine("\t\t\t\t Cadastrar Novo Contato                         - [1]\n");
+Console.WriteLine("\t\t\t\t Cadastrar novo contato                         - [1]\n");
 Console.WriteLine("\t\t\t\t Buscar Contato                                 - [2]\n");
 Console.WriteLine("\t\t\t\t Contatos Cadastrados                           - [3]\n");
 Console.WriteLine("\t\t\t\t Remover Contatos                               - [4]\n");
@@ -10,60 +10,39 @@ Console.WriteLine("\t\t\t\t Sair                                           - [0]
 Console.WriteLine("\t\t\t\t=====================================================\n");
 Console.Write("\t\t\t\t          Entre com a opção desejada: ");
 
-var opcao = int.Parse(Console.ReadLine());
-
+var opcao = int.Parse(ReadLine());
 var contatos = new List<Contato>();
 
-while (opcao != 0) {
+string ReadLine() => Console.ReadLine() ?? string.Empty;
 
-    if (opcao == 1) {
+void Cadastrar()
+{
+    Console.WriteLine("\n\n\t\t\t\tCadastro de novo contato:");
+    Console.Write("\t\t\t\tInforme o nome: ");
+    var nome = ReadLine();
+    Console.Write("\t\t\t\tTelefone (apenas numeros com ddd): ");
+    var telefone = ReadLine();
+    Console.Write("\t\t\t\tEmail: ");
+    var email = ReadLine();
 
-        //Inserção de contatos
-        Console.Write("\n\t\t\t\tInforme quantos contatos deseja cadastrar: ");
-        var quant = int.Parse(Console.ReadLine());
+    var contato = new Contato(nome, telefone, email);
 
-        for (var i = 0; i < quant; i++) {
+    if (!contato.HaveNotifications)
+    {
+        contatos.Add(contato);
+    }
+    
+    foreach (var notification in contato.Notifications)
+    {
+        Console.WriteLine(notification);
+    }
+}
 
-            Console.WriteLine("\n\n\t\t\t\tCadastro de novo contato:");
-            Console.Write("\t\t\t\tInforme o nome: ");
-            var nome = Console.ReadLine();
-            Console.Write("\t\t\t\tTelefone: ");
-            var telefone = Console.ReadLine();
-            Console.Write("\t\t\t\tEmail: ");
-            var email = Console.ReadLine();
-
-            Console.Write("\n\t\t\t\tConfimar? ");
-            var resp = Console.ReadLine();
-
-            if (resp == "s" || resp == "S") 
-            {
-                contatos.Add(new Contato(nome, telefone, email));
-                Console.WriteLine("\t\t\t\tContato cadastrado com sucesso!\n\n");
-
-            } 
-            else if (resp == "n" || resp == "N") 
-            {
-                
-                Console.WriteLine("\n\t\t\t\tInforamções corrigidas do contato:");
-                Console.Write("\t\t\t\tNome: ");
-                nome = Console.ReadLine();
-                Console.Write("\t\t\t\tTelefone: ");
-                telefone = Console.ReadLine();
-                Console.Write("\t\t\t\tEmail: \n");
-                email = Console.ReadLine();
-
-                contatos.Add(new Contato(nome, telefone, email));
-
-            } 
-            else
-            {
-                Console.WriteLine("\t\t\t\tResponda apenas com 's' ou 'n'. \n");
-                Console.Write("\n\t\t\t\tConfimar? ");
-                opcao = 1;
-
-            }
-        }
-
+while (opcao != 0) 
+{
+    if (opcao == 1) 
+    {
+        Cadastrar();
     }
 
     if (opcao == 2) 
@@ -90,7 +69,6 @@ while (opcao != 0) {
             else 
             {
                 Console.WriteLine("\n\t\t\t\tID não existe!");
-                searchId = null;
                 Console.Write("\n\t\t\t\tInforme outro ID valido: ");
                 searchId = Console.ReadLine();
 
@@ -111,7 +89,7 @@ while (opcao != 0) {
     {
 
         //Consultar todos os contatos
-        bool isEmpty = !contatos.Any(); 
+        var isEmpty = !contatos.Any(); 
 
         if (isEmpty) 
         {
@@ -139,10 +117,11 @@ while (opcao != 0) {
         {
             Console.WriteLine("\n\t\t\t\tLista vazia!");
 
-        } else 
+        } 
+        else 
         {
             Console.Write("\n\t\t\t\tInforme quantos contatos deseja deletar: ");
-            int del = int.Parse(Console.ReadLine());
+            var del = int.Parse(Console.ReadLine());
 
             if (del == 1) 
             {
