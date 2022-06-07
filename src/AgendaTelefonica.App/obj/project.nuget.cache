@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DSO5ZpKXtNWnLXkQ2q3qNFCvWsPrqpDUysRqjJINF1EHCYYR99jt1OW64Vue0uTjkgfN6HW9tCjhqTPRyEfqpg==",
+  "dgSpecHash": "dV/PnAKAIuywvPHJMXQKXr/ldi2GZwOT9nrvedM99TPu8IzCNrzJsS7gADEFEfHoz1x+WA36/K48/Mdym69fsg==",
   "success": true,
-  "projectFilePath": "D:\\dev\\Projetos\\agenda-telefonica\\AgendaTelefonica\\src\\AgendaTelefonica.App\\AgendaTelefonica.App.csproj",
+  "projectFilePath": "D:\\dev\\Projetos\\agenda-telefonica\\src\\AgendaTelefonica.App\\AgendaTelefonica.App.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
