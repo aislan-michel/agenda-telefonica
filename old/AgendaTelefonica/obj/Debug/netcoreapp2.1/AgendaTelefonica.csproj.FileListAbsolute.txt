@@ -1,0 +1,11 @@
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\bin\Debug\netcoreapp2.1\AgendaTelefonica.deps.json
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\bin\Debug\netcoreapp2.1\AgendaTelefonica.runtimeconfig.json
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\bin\Debug\netcoreapp2.1\AgendaTelefonica.runtimeconfig.dev.json
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\bin\Debug\netcoreapp2.1\AgendaTelefonica.dll
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\bin\Debug\netcoreapp2.1\AgendaTelefonica.pdb
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.csprojAssemblyReference.cache
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.AssemblyInfoInputs.cache
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.AssemblyInfo.cs
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.dll
+C:\Users\User\Documents\C#\Projetos\AgendaTelefonica\AgendaTelefonica\obj\Debug\netcoreapp2.1\AgendaTelefonica.pdb
