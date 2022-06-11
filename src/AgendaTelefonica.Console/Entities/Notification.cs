@@ -1,4 +1,4 @@
-﻿namespace AgendaTelefonica.App.Entities;
+﻿namespace AgendaTelefonica.Console.Entities;
 
 public abstract class Notification
 {

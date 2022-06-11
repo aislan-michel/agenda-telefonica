@@ -1,4 +1,6 @@
-﻿namespace AgendaTelefonica.App.Entities;
+﻿using AgendaTelefonica.Console.Extensions;
+
+namespace AgendaTelefonica.Console.Entities;
 
 public class Contato : Notification
 {
@@ -10,10 +12,10 @@ public class Contato : Notification
         Email = email;
     }
 
-    public Guid Id { get; private set; }
+    private Guid Id { get; }
 
     private readonly string _nome = string.Empty;
-    private string Nome
+    public string Nome
     {
         get => _nome;
         init
@@ -29,10 +31,10 @@ public class Contato : Notification
     }
 
     private readonly string _telefone = string.Empty;
-    private string Telefone
+    public string Telefone
     {
         get => _telefone;
-        init
+        private init
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -44,6 +46,11 @@ public class Contato : Notification
                 _notifications.Add("telefone inválido");
             }
 
+            if (!value.IsDigitsOnly())
+            {
+                _notifications.Add("formato inválido, deve-se informar apenas números");
+            }
+
             if (HaveNotifications)
             {
                 return;
@@ -52,13 +59,34 @@ public class Contato : Notification
             _telefone = value;
         }
     }
-    
-    
 
-    private string Email { get; set; }
+    private readonly string _email = string.Empty;
+    public string Email
+    {
+        get => _email;
+        private init
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                _notifications.Add("e-mail vázio");
+            }
+            
+            if (!value.IsValidEmail())
+            {
+                _notifications.Add("e-mail inválido");
+            }
+
+            if (HaveNotifications)
+            {
+                return;
+            }
+
+            _email = value;
+        }
+    }
     
     public override string ToString() 
     {
-        return $"Nome: {Nome} | Telefone: {Telefone} | E-mail: {Email}";
+        return $"Nome: {_nome} | Telefone: {_telefone} | E-mail: {_email}";
     }
 }

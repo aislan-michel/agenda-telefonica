@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CDFE05E9-01F4-4843-BC81-B842C32F0E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaTelefonica.App", "src\AgendaTelefonica.App\AgendaTelefonica.App.csproj", "{F7FA4305-7E8F-4B28-89C5-23A15B86E3EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgendaTelefonica.Console", "src\AgendaTelefonica.Console\AgendaTelefonica.Console.csproj", "{F7FA4305-7E8F-4B28-89C5-23A15B86E3EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
