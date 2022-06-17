@@ -18,7 +18,7 @@ public class Contato : Notification
     public string Nome
     {
         get => _nome;
-        init
+        private init
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -85,8 +85,13 @@ public class Contato : Notification
         }
     }
     
-    public override string ToString() 
+    public static implicit operator string(Contato contato) 
+        => $"{contato.Nome},{contato.Telefone},{contato.Email}";
+
+    public static implicit operator Contato(string line)
     {
-        return $"Nome: {_nome} | Telefone: {_telefone} | E-mail: {_email}";
+        var values = line.Split(",");
+
+        return new Contato(values[0], values[1], values[2]);
     }
 }
