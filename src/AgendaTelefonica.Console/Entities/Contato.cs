@@ -14,11 +14,11 @@ public class Contato : Notification
 
     private Guid Id { get; }
 
-    private readonly string _nome = string.Empty;
+    private string _nome = string.Empty;
     public string Nome
     {
         get => _nome;
-        private init
+        private set
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -30,11 +30,11 @@ public class Contato : Notification
         }
     }
 
-    private readonly string _telefone = string.Empty;
+    private string _telefone = string.Empty;
     public string Telefone
     {
         get => _telefone;
-        private init
+        private set
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -60,11 +60,11 @@ public class Contato : Notification
         }
     }
 
-    private readonly string _email = string.Empty;
+    private string _email = string.Empty;
     public string Email
     {
         get => _email;
-        private init
+        private set
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -83,6 +83,13 @@ public class Contato : Notification
 
             _email = value;
         }
+    }
+
+    public void Atualizar(string nome, string telefone, string email)
+    {
+        Nome = nome;
+        Telefone = telefone;
+        Email = email;
     }
     
     public static implicit operator string(Contato contato) 

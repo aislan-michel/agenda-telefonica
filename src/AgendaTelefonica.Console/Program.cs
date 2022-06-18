@@ -1,110 +1,63 @@
 ﻿using AgendaTelefonica.Console.Entities;
 using AgendaTelefonica.Console.Entities.Enums;
-using AgendaTelefonica.Console.Extensions;
-
-var agenda = Obter();
-const string agendaPath = @"../../../Data/agenda.csv";
 
 string ReadLine() => Console.ReadLine() ?? string.Empty;
 
-void Cadastrar(Contato contato)
-{
-    if (!contato.HaveNotifications)
-    {
-        agenda.Add(contato);
-        
-        File.AppendAllText(agendaPath, "\n" + (string) contato);
-        
-        return;
-    }
-    
-    foreach (var notification in contato.Notifications)
-    {
-        Console.WriteLine(notification);
-    }
-}
-
-Contato? Buscar(string termo)
-{
-    if (agenda == null || agenda.Equals(new List<Contato>()))
-    {
-        agenda = Obter();
-    }
-
-    if (string.IsNullOrWhiteSpace(termo))
-    {
-        return null;
-    }
-    
-    if (termo.IsValidEmail())
-    {
-        return agenda.FirstOrDefault(x => x.Email == termo);
-    }
-    
-    if (termo.IsDigitsOnly())
-    {
-        return agenda.FirstOrDefault(x => x.Telefone == termo);
-    }
-    
-    return agenda.FirstOrDefault(x => x.Nome == termo);
-}
-
-List<Contato> Obter()
-{
-    var registros = File.ReadLines(agendaPath);
-
-    return registros.Select(linha => (Contato)linha).ToList();
-}
-
-Console.WriteLine("\t\t\t\t==================AGENDA TELEFÔNICA==================\n");
-Console.WriteLine("\t\t\t\t Cadastrar                                      - [1]\n");
-Console.WriteLine("\t\t\t\t Buscar                                         - [2]\n");
-Console.WriteLine("\t\t\t\t Listar                                         - [3]\n");
-Console.WriteLine("\t\t\t\t Editar                                         - [4]\n");
-Console.WriteLine("\t\t\t\t Remover                                        - [5]\n");
-Console.WriteLine("\t\t\t\t Limpar                                         - [6]\n");
-Console.WriteLine("\t\t\t\t Sair                                           - [0]\n");
-Console.WriteLine("\t\t\t\t=====================================================\n");
-Console.Write("\t\t\t\t          Entre com a opção desejada: ");
-
 try
 {
-    var opcao = Enum.Parse<Opcao>(ReadLine());
+    var agenda = new Agenda();
 
-    while (opcao != 0)
+    var opcao = Opcao.MostrarOperacoes;
+
+    while (opcao != Opcao.Sair)
     {
         switch (opcao)
         {
             case Opcao.Cadastrar:
-                Console.Write("\n\t\t\t\tInforme o nome: ");
-                var nome = ReadLine();
+                {
+                    Console.Write("\n\tInforme o nome: ");
+                    var nome = ReadLine();
 
-                Console.Write("\t\t\t\tTelefone (apenas numeros com ddd): ");
-                var telefone = ReadLine();
+                    Console.Write("\tTelefone (apenas numeros com ddd): ");
+                    var telefone = ReadLine();
 
-                Console.Write("\t\t\t\tE-mail: ");
-                var email = ReadLine();
+                    Console.Write("\tE-mail: ");
+                    var email = ReadLine();
 
-                Cadastrar(new Contato(nome, telefone, email));
-                
-                Console.WriteLine("\n");
+                    var contato = new Contato(nome, telefone, email);
+
+                    if (!contato.HaveNotifications)
+                    {
+                        agenda.AdicionarContato(contato);
+                        break;
+                    }
+
+                    Console.WriteLine("\n");
+    
+                    foreach (var notification in contato.Notifications)
+                    {
+                        Console.WriteLine($"\t{notification}");
+                    }
+                    
+                    Console.WriteLine("\n");
+                }
 
                 break;
             case Opcao.Buscar:
                 {
-                    Console.Write("\n\t\t\t\tInforme o nome, telefone ou e-mail: ");
+                    Console.Write("\n\tInforme o nome, telefone ou e-mail: ");
 
                     var termo = ReadLine();
 
-                    var contato = Buscar(termo);
+                    var contato = agenda.ObterContato(termo);
 
                     if (contato == null)
                     {
-                        Console.WriteLine("\n\t\t\t\tContato não encontrado\n");
+                        Console.WriteLine("\n\tContato não encontrado\n");
                         break;
                     }
 
-                    Console.WriteLine($"\n\t\t\t\t{(string) contato}\n");
+                    Console.WriteLine($"\n\t{(string) contato}\n");
                 }
 
                 break;
@@ -112,82 +65,114 @@ try
                 {
                     Console.WriteLine("\n");
                     
-                    foreach (var contato in agenda)
+                    foreach (var contato in agenda.Contatos)
                     {
-                        Console.WriteLine($"\t\t\t\t#{agenda.IndexOf(contato) + 1} - {(string) contato}");
+                        Console.WriteLine($"\t#{agenda.Contatos.ToList().IndexOf(contato) + 1} - {(string) contato}");
                     }
                     
                     Console.WriteLine("\n");
                 }
 
                 break;
-            case Opcao.Editar:
-                break;
-            case Opcao.Remover:
+            case Opcao.Atualizar:
                 {
-                    Console.Write("\t\t\t\tInforme o nome, telefone ou e-mail: ");
+                    Console.WriteLine("\n");
+                    
+                    Console.Write("\tInforme o nome, telefone ou e-mail: ");
 
                     var termo = ReadLine();
 
-                    var contato = Buscar(termo);
-
+                    var contato = agenda.ObterContato(termo);
+                    
                     if (contato == null)
                     {
-                        Console.WriteLine("\n\t\t\t\tContato não encontrado\n");
+                        Console.WriteLine("\n\tContato não encontrado\n");
                         break;
                     }
                     
-                    agenda.Remove(contato);
+                    Console.WriteLine($"\n\t{(string) contato}");
+                    
+                    Console.Write("\n\tInforme o nome: ");
+                    var nome = ReadLine();
 
-                    var lines = File.ReadLines(agendaPath).ToList();
+                    Console.Write("\tTelefone (apenas numeros com ddd): ");
+                    var telefone = ReadLine();
 
-                    var line = lines.FirstOrDefault(x => x.Contains(termo));
+                    Console.Write("\tE-mail: ");
+                    var email = ReadLine();
 
-                    if (!string.IsNullOrWhiteSpace(line))
+                    contato.Atualizar(nome, telefone, email);
+
+                    if (contato.HaveNotifications)
                     {
-                        lines.Remove(line);
+                        Console.WriteLine("\n");
+                        
+                        foreach (var notification in contato.Notifications)
+                        {
+                            Console.WriteLine($"\t{notification}");
+                        }
+                    }
+
+                    Console.WriteLine($"\n\t{(string) contato}");
+                    
+                    Console.WriteLine("\n");
+                }
+                
+                break;
+            case Opcao.Remover:
+                {
+                    Console.Write("\n\tInforme o nome, telefone ou e-mail: ");
+
+                    var termo = ReadLine();
+
+                    var contato = agenda.ObterContato(termo);
+
+                    if (contato == null)
+                    {
+                        Console.WriteLine("\n\tContato não encontrado\n");
+                        break;
                     }
                     
-                    File.WriteAllText(agendaPath, string.Join("\n", lines));
+                    agenda.DeletarContato(contato);
 
-                    Console.WriteLine("\n\t\t\t\tContato deletado com sucesso\n");
+                    Console.WriteLine("\n\tContato deletado com sucesso\n");
                 }
                 
                 break;
             case Opcao.Limpar:
-                File.Delete(agendaPath);
+                agenda.LimparContatos();
+                
+                break;
+            case Opcao.MostrarOperacoes:
+                {
+                    Console.WriteLine("\t==================AGENDA TELEFÔNICA==================\n");
+                    Console.WriteLine("\t Cadastrar                                      - [1]\n");
+                    Console.WriteLine("\t Buscar                                         - [2]\n");
+                    Console.WriteLine("\t Listar                                         - [3]\n");
+                    Console.WriteLine("\t Atualizar                                      - [4]\n");
+                    Console.WriteLine("\t Deletar                                        - [5]\n");
+                    Console.WriteLine("\t Limpar                                         - [6]\n");
+                    Console.WriteLine("\t Sair                                           - [0]\n");
+                    Console.WriteLine("\t=====================================================\n");
+                    Console.Write("\t          Entre com a opção desejada: ");
 
-                File.Create(agendaPath);
-
-                agenda.Clear();
+                    opcao = Enum.Parse<Opcao>(ReadLine());
+                }
                 
                 break;
             default:
-                Console.WriteLine("\n\n\t\t\t\t\t\tOpção Inválida\n\n");
+                Console.WriteLine("\n\nOpção Inválida\n\n");
                 throw new ArgumentOutOfRangeException(nameof(opcao));
-        }
-
-        Console.WriteLine("\t\t\t\t==================AGENDA TELEFÔNICA==================\n");
-        Console.WriteLine("\t\t\t\t Cadastrar                                      - [1]\n");
-        Console.WriteLine("\t\t\t\t Buscar                                         - [2]\n");
-        Console.WriteLine("\t\t\t\t Listar                                         - [3]\n");
-        Console.WriteLine("\t\t\t\t Editar                                         - [4]\n");
-        Console.WriteLine("\t\t\t\t Remover                                        - [5]\n");
-        Console.WriteLine("\t\t\t\t Limpar                                         - [6]\n");
-        Console.WriteLine("\t\t\t\t Sair                                           - [0]\n");
-        Console.WriteLine("\t\t\t\t=====================================================\n");
-        Console.Write("\t\t\t\t          Entre com a opção desejada: ");
-
-        opcao = Enum.Parse<Opcao>(ReadLine());
+        }       
     }
 }
 catch (Exception e)
 {
-    Console.WriteLine($"\n\t\t\t\t{e.Message}");
+    Console.WriteLine($"\n\t{e.Message}");
 }
 finally
 {
-    Console.WriteLine("\n\t\t\t\tPrograma finalizado");
+    Console.WriteLine("\n\tPrograma finalizado");
     Console.ReadKey();
 }
 
