@@ -40,6 +40,8 @@ try
                     }
                     
                     Console.WriteLine("\n");
+
+                    opcao = Opcao.MostrarOperacoes;
                 }
 
                 break;
@@ -58,6 +60,8 @@ try
                     }
 
                     Console.WriteLine($"\n\t{(string) contato}\n");
+                    
+                    opcao = Opcao.MostrarOperacoes;
                 }
 
                 break;
@@ -71,6 +75,8 @@ try
                     }
                     
                     Console.WriteLine("\n");
+                    
+                    opcao = Opcao.MostrarOperacoes;
                 }
 
                 break;
@@ -116,6 +122,8 @@ try
                     Console.WriteLine($"\n\t{(string) contato}");
                     
                     Console.WriteLine("\n");
+                    
+                    opcao = Opcao.MostrarOperacoes;
                 }
                 
                 break;
@@ -136,11 +144,17 @@ try
                     agenda.DeletarContato(contato);
 
                     Console.WriteLine("\n\tContato deletado com sucesso\n");
+                    
+                    opcao = Opcao.MostrarOperacoes;
                 }
                 
                 break;
             case Opcao.Limpar:
-                agenda.LimparContatos();
+                {
+                    agenda.LimparContatos();
+
+                    opcao = Opcao.MostrarOperacoes;
+                }
                 
                 break;
             case Opcao.MostrarOperacoes:
